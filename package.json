@@ -1,0 +1,28 @@
+{
+  "name": "MinorChanges",
+  "version": "0.0.1",
+  "description": "A converter to convert text-based data",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Deanly/MinorChanges.git"
+  },
+  "keywords": [
+    "convert",
+    "yaml",
+    "properties"
+  ],
+  "author": "Dean Lee",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Deanly/MinorChanges/issues"
+  },
+  "dependencies": {
+    "commander": "^2.11.0",
+    "js-yaml": "^3.10.0",
+    "lodash": "^4.17.4"
+  }
+}
