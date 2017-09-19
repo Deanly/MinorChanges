@@ -5,9 +5,9 @@ const program = require('commander')
     , processor = require('./js/processor');
 
 program
-    .option('-d, --dist <dist>', 'Directory where the converted file will be saved. (default=./dist)')
-    .option('-s, --source <source>', 'The source file or directory to convert. If set to a directory, convert all files in the directory.')
-    .option('-t, --target <target>', 'A extension of the file to be converted.')
+    .option('-d, --dist <dist>', 'Directory where the converted file will be saved. \n\t[default: ./dist]\n')
+    .option('-s, --source <source>', 'The source file or directory to convert. If set to a directory, convert all files in the directory.\n')
+    .option('-t, --target <target>', 'A extension of the file to be converted. \n\t[default: properties]\n')
     .parse(process.argv);
 
 const options = {};
