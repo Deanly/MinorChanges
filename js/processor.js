@@ -61,6 +61,8 @@ function run(options) {
 }
 
 /**
+ * Read, convert, and write files. Simplifies the output of the log. This is a high-order function
+ * for performing source map iterations.
  *
  * @param parserMap
  * @param options
@@ -72,7 +74,7 @@ function convert(parserMap, options) {
 
     return (source) => {
         if (!parserMap[source.exp] || !parserMap[options.target])
-            return console.log('Check source name..  '.concat(source.getFullname()));
+            return console.log('Check source filename [ '.concat(source.getFullname()).concat(' ]'));
 
         representator = parserMap[source.exp].parse || null;
         generator = parserMap[options.target].stringify || null;
@@ -107,6 +109,7 @@ function convert(parserMap, options) {
 
 /**
  * Class to generalize information of parsed source.
+ *
  * @class Source
  */
 class Source {
@@ -141,6 +144,7 @@ class Source {
 
 
 /**
+ * Creates a source map from a path
  *
  * @param src A path of file or directory
  * @returns {Array}
@@ -155,9 +159,9 @@ function mapSources(src, exp) {
                             src :
                             (splitedSrc.slice(0, splitedSrc.length - 1).join('/'))
 
-        , fileMap       = isDir ?
+        , fileMap       = (isDir ?
                             files.readDir(sourcePath, exp) :
-                            splitedSrc.slice(splitedSrc.length - 1, splitedSrc.length)
+                            splitedSrc.slice(splitedSrc.length - 1, splitedSrc.length)) || []
 
         , dataMap       = [];
 

@@ -58,11 +58,11 @@ class Properties {
         };
 
         lines.forEach(function (line) {
-            const divider = line.indexOf('=');
-            const key = line.slice(0, divider);
-            const value = line.slice(divider + 1);
+            const divider = line.indexOf('=')
+                , key = line.slice(0, divider)
+                , value = line.slice(divider + 1)
+                , keys = key.split('.');
 
-            const keys = key.split('.');
             recursive(keys, value, obj);
         });
 
