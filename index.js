@@ -13,17 +13,11 @@ program
 const options = {};
 
 if (program.dist) {
-    if (!options.config)
-        options.config = {};
-
-    options.config.dist = program.dist;
+    options.dist = program.dist;
 }
 
 if (program.source) {
-    if (!options.config)
-        options.config = {};
-
-    options.config.src = program.source;
+    options.src = program.source;
 }
 
 if (program.target) {

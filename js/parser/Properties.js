@@ -3,61 +3,47 @@
  * @class Properties
  */
 class Properties {
-    constructor(parsing) {
-        parsing && this.parse(parsing);
-    }
 
-    getObject() {
-        return this.obj;
-    }
+    static get EXP() { return 'properties'; }
 
     /**
      *
      * @param {Object} obj
-     * @param {String} prefix
      * @returns {Array}
      */
-    getLineArray(obj, prefix) {
-        const result = [];
-        const keys = Object.keys(obj);
-        keys.forEach(function (key) {
-            let _prefix;
+    static stringify(obj) {
 
-            if (typeof obj[key] === 'object') {
-                let _currPrefix = key.concat('.');
-                _prefix = prefix ? prefix.concat(_currPrefix) : _currPrefix;
-                result.push.apply(result, object2properties(obj[key], _prefix));
-            } else {
-                _prefix = prefix ? prefix.concat(key) : key;
-                result.push(_prefix.concat('=').concat(obj[key]));
-            }
-        });
+        const recursive = (obj, prefix) => {
+            let result = '';
+            const keys = Object.keys(obj);
 
-        return result;
-    }
+            keys.forEach(function (key) {
+                let _prefix;
 
-    parse(data) {
-        switch(typeof data) {
-            case 'array':
-                this._linesToObject(data);
-                break;
-            case 'object':
-                this.obj = data;
-                break;
-            case 'string':
-                break;
-            default:
-                console.error('Unable to parse data in Properties');
-        }
+                if (typeof obj[key] === 'object') {
+                    let _currPrefix = key.concat('.');
+                    _prefix = prefix ? prefix.concat(_currPrefix) : _currPrefix;
+                    result += recursive(obj[key], _prefix);
+                } else {
+                    _prefix = prefix ? prefix.concat(key) : key;
+                    result += _prefix.concat('=').concat(obj[key]).concat('\n');
+                }
+            });
+            return result;
+        };
+
+        return recursive(obj, null);
     }
 
     /**
      *
-     * @param {Array} lines
-     * @returns {Object} json
+     * @param {String} data
+     * @returns {Object} obj
      */
-    _linesToObject(lines) {
-        const result = {};
+    static parse(data) {
+        const CRLF = data.indexOf('\r\n') > -1 ? '\r\n' : '\n'
+            , lines = data.split(CRLF)
+            , obj = {};
 
         const recursive = (keys, value, result) => {
             if (keys.length === 1) {
@@ -66,7 +52,7 @@ class Properties {
                 return result;
             } else {
                 const key = keys[0];
-                result[key] = inflateItem(keys.slice(1), value, result[key] || {});
+                result[key] = recursive(keys.slice(1), value, result[key] || {});
                 return result;
             }
         };
@@ -77,12 +63,11 @@ class Properties {
             const value = line.slice(divider + 1);
 
             const keys = key.split('.');
-            recursive(keys, value, result);
+            recursive(keys, value, obj);
         });
 
-        return result;
+        return obj;
     }
-
 
 }
 
