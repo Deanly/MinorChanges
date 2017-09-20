@@ -29,6 +29,8 @@ function initParser() {
         }
     });
 
+    console.log('\tParser list : \n\t\t - '.concat(_.keys(parsers).join('\n\t\t - ')).concat('\n'));
+
     return parsers;
 }
 
@@ -74,7 +76,7 @@ function convert(parserMap, options) {
 
     return (source) => {
         if (!parserMap[source.exp] || !parserMap[options.target])
-            return console.log('Check source filename [ '.concat(source.getFullname()).concat(' ]'));
+            return console.log('Failed.. [ '.concat(source.getFullname()).concat(' ] please check usage (help with -h)'));
 
         representator = parserMap[source.exp].parse || null;
         generator = parserMap[options.target].stringify || null;
@@ -101,7 +103,7 @@ function convert(parserMap, options) {
             if (source.exp === options.target)
                 console.log('Skip, Same expression..');
             else
-                console.log('Not Defined Parser..');
+                console.log('Failed. Not Defined Parser..');
 
         }
     };

@@ -8,6 +8,7 @@ $ npm i
 ```
 
 ## Supported formats
+* Json (.json)
 * properties (.properties)
 * yaml (.yml)
 
