@@ -8,8 +8,8 @@ const fs = require('fs');
  */
 exports.readDir = function (dir, extension = '*') {
     if (!fs.existsSync(dir)) {
-        console.error('The src directory [ ' + dir + ' ] does not exist.');
-        return;
+        console.error('The source directory or file [ ' + dir + ' ] does not exist.');
+        return [];
     }
 
     const regex = new RegExp('\\.' + extension)
